@@ -54,4 +54,19 @@ def getTopRated():
 
 ## Conclusion
 
-getTopRated()
+def comparing_category_with_installation():
+    category_installs = data1.groupby("Category")["Installs"].sum()
+
+    # Créer un graphique à barres pour le nombre d'installations par catégorie
+    plt.figure(figsize=(10, 6))
+    category_installs.plot(kind="bar")
+    plt.title("Nombre d'installations par catégorie d'application")
+    plt.xlabel("Catégorie")
+    plt.ylabel("Nombre d'installations")
+    plt.xticks(rotation=45, ha="right")
+    plt.tight_layout()
+
+    # Afficher le graphique
+    plt.show()
+
+comparing_category_with_installation()
