@@ -76,17 +76,3 @@ def transform_to_int_installs(string):
         return string  # Keep the original format
     cleaned_string = string.replace(",", "").replace("+", "")
     return pd.to_numeric(cleaned_string, errors="coerce")
-
-dataframe = pd.DataFrame(pd.read_csv("googleplaystore.csv"))
-user_dataframe = pd.DataFrame(pd.read_csv("googleplaystore_user_reviews.csv"))
-
-get_all_category(dataframe)
-change_to_no_rating(dataframe)
-transform_review_user_dataframe(user_dataframe)
-translate_to_english(user_dataframe)
-translate_to_english_user_dataframe(user_dataframe)
-change_the_NaN_user_dataframe(user_dataframe)
-fillnull(user_dataframe)
-add_user_sentiment(dataframe)
-concatenate_playstore_userReview(dataframe, user_dataframe)
-extract_to_csv(dataframe)
