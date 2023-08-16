@@ -27,30 +27,23 @@ def getTopRated():
     plt.ylabel('Installation')
     plt.xlabel('Rating')
     plt.title('Évolution des installations par rapport au note donnée par l\'utilisateur')
-    # plt.show()
+    plt.show()
 
 ## Etude de 4 cas de plus rated application pour savoir les avances données par les updates
-    grouped_by_app = data1.groupby("App").sum()
+    grouped_by_app = total_rates_ranked.groupby("App").sum()
     app1 = grouped_by_app.loc["Boys Photo Editor - Six Pack & Men's Suit"]
     app2 = grouped_by_app.loc["Animated Photo Editor"]
     app3 = grouped_by_app.loc["ROBLOX"]
 
-    plt.figure(figsize=(18, 9))
-    plt.plot(app1, label='Boys Photo Editor - Six Pack & Men\'s Suit')
-    plt.plot(app2, label='Animated Photo Editor')
-    plt.plot(app3, label='ROBLOX')
-    plt.ylabel('Rating per Application')
-    plt.title('Évolution des nombres d\'installation selon les updates')
-    plt.legend()
-    plt.show()
 ## Corrélation entre ces application
-    # df = pd.DataFrame({'Boys Photo Editor - Six Pack & Men\'s Suit': app1, 'Animated Photo Editor': app2,'ROBLOX' : app3})
+    df = pd.DataFrame({'Boys Photo Editor - Six Pack & Men\'s Suit': app1, 'Animated Photo Editor': app2,'ROBLOX' : app3})
 
-    # corr = df.corr()
+    corr = df.corr()
 
-    # sb.heatmap(corr, annot=True, cmap='coolwarm')
-    # plt.title('Corrélation entre les application les plus notéess')
-    # plt.show()
+    sb.heatmap(corr, annot=True, cmap='coolwarm')
+    plt.title('Corrélation entre les application les plus notéess')
+    plt.show()
+   
 
 def comparing_category_with_installation():
     category_installs = data1.groupby("Category")["Installs"].sum()
