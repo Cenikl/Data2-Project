@@ -64,8 +64,6 @@ def comparing_category_with_installation(data):
 # Show the plot
     plt.show()
 
-comparing_category_with_installation(data1)
-
 def clean_price(price):
     if price == 'Free':
         return 0.00
