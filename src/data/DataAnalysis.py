@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sb
-from Transform import transform_to_int_installs
 import re
 
 data1 = pd.DataFrame(pd.read_csv('Transformed.csv'))
@@ -71,24 +70,16 @@ def clean_price(price):
         return 0.00
     else:
         return float(price.replace('$',''))
-    
-def clean_installs(installs):
-    if '+' in installs:
-        return int(re.sub('[^0-9]','',installs))
-    elif installs == 'Free':
-        return 0
-    else:
-        return int(installs.replace(',',''))
 
 def difference_between_paid_and_free_apps():
     data1['Price'] = data1['Price'].apply(clean_price)
-    data1['Installs'] = data1['Installs'].apply(clean_installs)
+    data1['Installs'] = pd.to_numeric(data1['Installs'], errors='coerce')
     data1['Price'].fillna(0).astype(str)
     data1['Rating'] = data1['Rating'].replace(19.0,5.0)
     filtered_df = data1[data1['Price'] != 0.00]
 
     y_min = 0
-    y_max = 500000
+    y_max = 600
 
     plt.scatter(filtered_df['Price'], filtered_df['Installs'],alpha=0.5)
     plt.xlabel('Price ($)')
@@ -100,7 +91,7 @@ def difference_between_paid_and_free_apps():
 
 def rating_apps_considering_prices():
     data1['Price'] = data1['Price'].apply(clean_price)
-    data1['Installs'] = data1['Installs'].apply(clean_installs)
+    data1['Installs'] = pd.to_numeric(data1['Installs'], errors='coerce')
     data1['Price'].fillna(0).astype(str)
     data1['Rating'] = data1['Rating'].replace(19.0,5.0)
     filtered_df = data1[data1['Price'] != 0.00]
@@ -111,3 +102,5 @@ def rating_apps_considering_prices():
     plt.title('Rating of the Apps')
     plt.xticks(rotation=45)
     plt.show()
+
+rating_apps_considering_prices()
