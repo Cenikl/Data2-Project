@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sb
+from Transform import transform_to_int_installs
 
 data1 = pd.DataFrame(pd.read_csv('Transformed.csv'))
 
@@ -54,4 +55,23 @@ def getTopRated():
 
 ## Conclusion
 
-getTopRated()
+def comparing_category_with_installation(data):
+    data['Installs'] = pd.to_numeric(data['Installs'], errors='coerce')
+
+# Group by category and calculate the sum of installations
+    category_installs = data.groupby("Category")["Installs"].sum()
+
+# Create a bar plot for the number of installations per category
+    plt.figure(figsize=(10, 6))
+    category_installs.plot(kind="bar")
+    plt.title("Nombre d'installations par catégorie d'application")
+    plt.xlabel("Catégorie")
+    plt.ylabel("Nombre d'installations")
+    plt.xticks(rotation=45, ha="right")
+    plt.tight_layout()
+
+# Show the plot
+    plt.show()
+
+
+comparing_category_with_installation(data1)

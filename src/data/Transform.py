@@ -64,6 +64,15 @@ def concatenate_playstore_userReview(frame,framereview):
     frame["User_sentiment_subjectivity"] = framereview.apply(lambda x: add_user_sentiment_subjectivity(x["Sentiment_Subjectivity"],framereview),axis=1)
     frame["User_sentiment"] = framereview["Sentiment"].apply(add_user_sentiment)
     frame["User_sentiment"].fillna(frame["User_sentiment"].mode()[0], inplace=True)
+    frame["Installs"] = frame["Installs"].apply(transform_to_int_installs)
 
 def extract_to_csv(frame):
     return frame.to_csv("Transformed.csv")  
+
+def transform_to_int_installs(string):
+    if string == "Free":
+        return None  # Non-convertible value
+    if "," in string and "+" in string:
+        return string  # Keep the original format
+    cleaned_string = string.replace(",", "").replace("+", "")
+    return pd.to_numeric(cleaned_string, errors="coerce")
