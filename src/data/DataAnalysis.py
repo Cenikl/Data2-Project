@@ -5,7 +5,23 @@ import re
 
 data1 = pd.DataFrame(pd.read_csv('Transformed.csv'))
 
+def get_top_rated_app():
+    data1['Installs'] = pd.to_numeric(data1['Installs'], errors='coerce')
+    data_sorted = data1.sort_values(by=["Installs", "Rating"], ascending=False)
+    # Select the top 10 apps
+    top_10_apps = data_sorted.head(10)
 
+# Create a bar plot to visualize the top 10 apps
+    plt.figure(figsize=(10, 6))
+    plt.barh(top_10_apps['App'], top_10_apps['Installs'], color='blue')
+    plt.title("Top 10 Apps by Installs and Ratings")
+    plt.xlabel("Number of Installs")
+    plt.ylabel("App")
+    plt.gca().invert_yaxis()  # Invert y-axis to have the highest installs at the top
+    plt.tight_layout()
+
+# Show the plot
+    plt.show()
 
 def getTopRated():
 ## Identifier les 10 applications les plus populaires
@@ -103,6 +119,7 @@ def rating_apps_considering_prices():
     plt.xticks(rotation=45)
     plt.show()
 
+get_top_rated_app()
 rating_apps_considering_prices()
 comparing_category_with_installation(data1)
 difference_between_paid_and_free_apps()
